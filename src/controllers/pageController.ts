@@ -28,7 +28,7 @@ export const register = async (req: Request, res: Response) => {
 	try {
 		// Verify that the data exists in the body
 		if (!req.body.email && !req.body.password) {
-			return res.status(400).send({ status: 'Please, provide email and password.' });
+			return res.status(400).send({ status: 'error', message: 'Please, provide email and password.' });
 		}
 		// Verify the email with regEx
 		if (!regexInfo.email.test(req.body.email)) {
@@ -40,7 +40,7 @@ export const register = async (req: Request, res: Response) => {
 		}
 		// Verify if already exist an user with the email
 		const existingUser = await User.findOne({ email: req.body.email });
-		if (existingUser) return res.status(409).send({ status: 'error', information: 'User already exists.' });
+		if (existingUser) return res.status(409).send({ status: 'error', message: 'User already exists.' });
 		// Create a new user
 		const newUser = new User({
 			email: req.body.email,
@@ -48,7 +48,7 @@ export const register = async (req: Request, res: Response) => {
 		});
 		await newUser.save();
 		console.log('New user registered: ', newUser);
-		res.status(201).send({ status: 'ok', newUser });
+		res.status(201).send({ status: 'ok' });
 	} catch (error) {
 		// In case of errors
 		res.status(400).send(error);
