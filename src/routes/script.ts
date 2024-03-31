@@ -11,7 +11,7 @@ router.get('/ping', PageController.ping);
 
 router.get('/users', PageController.users);
 
-router.get('/user/login', PageController.login);
+router.post('/user/login', PageController.login);
 router.post('/user/register', PageController.register);
 
 export default router;
